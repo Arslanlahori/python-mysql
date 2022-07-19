@@ -1,0 +1,38 @@
+import mysql.connector as connector
+class dbhelper:
+    def __init__(self):
+        self.con=connector.connect(host='localhost',
+                      port='3306',
+                      user='root',
+                      password='12345',
+                      database='login')
+        query='create table if not exists user(userID int primary key,password varchar(12),phoneNo varchar(12))'
+        cur=self.con.cursor()
+        cur.execute(query)
+        print("created")    
+        #insert data
+    def insert_table(self):
+        query="insert into user(userID,password,phoneNo) VALUES(%s,%s,%s)"
+        b=(1,"arslan","3474253635")
+        cur=self.con.cursor()
+        cur.execute(query,b)
+        self.con.commit()
+        print("save the db")
+        #fetcg data
+    def fetch_data(self):
+        query="select * from user"
+        cur=self.con.cursor()
+        cur.execute(query)
+        for row in cur:
+            print(row)
+    def delete_data(self,userID):
+        query="delete from user where userID=1"
+        print(query)
+        cur=self.con.cursor()
+        cur.execute(query)
+        print("deleted")
+helper=dbhelper()
+#helper.insert_table()
+helper.delete_data(1)
+helper.fetch_data()
+
